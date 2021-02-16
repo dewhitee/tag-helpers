@@ -14,11 +14,10 @@ namespace Dewhitee.TagHelpers.Buttons
         public string For { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            string href = Route;
             string @class = "btn btn-light text-dark";
 
             output.Content.SetHtmlContent(
-                $"<a id='back-btn' href='{href}' class='{@class}'>Back</a>");
+                $"<a id='back-btn' href='{Route}' class='{@class}'>Back</a>");
             output.TagMode = TagMode.StartTagAndEndTag;
         }
     }
