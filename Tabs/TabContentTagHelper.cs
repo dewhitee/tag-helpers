@@ -8,7 +8,14 @@ namespace Dewhitee.TagHelpers.Tabs
     [HtmlTargetElement("tab-content", TagStructure = TagStructure.NormalOrSelfClosing)]
     public class TabContentTagHelper : TagHelper
     {
+        /// <summary>
+        /// Name of a tab button that opens/closes this tab.
+        /// </summary>
         public string Title { get; set; }
+
+        /// <summary>
+        /// If true - will be shown by default.
+        /// </summary>
         public bool Active { get; set; }
         
         public override int Order => 15;

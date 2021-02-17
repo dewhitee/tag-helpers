@@ -17,6 +17,9 @@ namespace Dewhitee.TagHelpers.Tabs
     [HtmlTargetElement("tab-buttons", TagStructure = TagStructure.WithoutEndTag)]
     public class TabButtonsTagHelper : TagHelper
     {
+        /// <summary>
+        /// Names of a tab buttons separated with comma (',').
+        /// </summary>
         public string Titles { get; set; }
         public override int Order => 10;
 
