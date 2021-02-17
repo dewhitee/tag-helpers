@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -52,9 +54,6 @@ namespace Dewhitee.TagHelpers.Messages
         /// </summary>
         public string ModalId { get; set; }
 
-        /// <summary>
-        /// Rendering order of this tag.
-        /// </summary>
         public override int Order => 100;
 
         protected void OnProcess(TagHelperContext context, TagHelperOutput output, string textClass, string bgClass, string noteClass, string calloutClass,
@@ -63,16 +62,15 @@ namespace Dewhitee.TagHelpers.Messages
             bool validRole = false;
             if (User is not null && !string.IsNullOrEmpty(Roles))
             {
-                string[] roles = Roles.Contains(',') ? Roles.Split(',') : new string[] { Roles };
-                foreach (string role in roles)
+                var roles = Roles.Contains(',') ? Roles.Split(',') : new string[] { Roles };
+                if (roles.Any(role => User.IsInRole(role)))
                 {
-                    if (User.IsInRole(role))
-                    {
-                        validRole = true;
-                        break;
-                    }
+                    validRole = true;
                 }
             }
+
+            // Set Msg value to inner html content if output.TagMode is not SelfClosing or StartTagOnly      
+            ChooseContent(output);
 
             bool validMsg = When && !string.IsNullOrEmpty(Msg);
             bool validUser = (User is not null && validRole) || User is null;
@@ -171,24 +169,26 @@ namespace Dewhitee.TagHelpers.Messages
         {
             string modalClass = !string.IsNullOrEmpty(ModalId) ? "modal fade" : "modal";
             string id = ModalId;
-            int tabIndex = -1;
-            string role = "dialog";
+            const int tabIndex = -1;
+            const string role = "dialog";
             string labelledBy = ModalId + "-title";
-            bool ariaHidden = true;
+            const bool ariaHidden = true;
 
-            string modalDialogClass = "modal-dialog modal-dialog-centered";
-            string modalDialogRole = "document";
+            const string modalDialogClass = "modal-dialog modal-dialog-centered";
+            const string modalDialogRole = "document";
 
-            string modalContentClass = "modal-content";
+            const string modalContentClass = "modal-content";
 
-            string modalHeaderClass = "modal-header";
+            const string modalHeaderClass = "modal-header";
 
-            string modalTitleClass = "modal-title";
-            string modalTitleText = "Help";
+            const string modalTitleClass = "modal-title";
+            const string modalTitleText = "Help";
 
-            string modalBodyClass = "modal-body";
+            const string modalBodyClass = "modal-body";
 
-            string modalFooterClass = "modal-footer";
+            const string modalFooterClass = "modal-footer";
+
+            AddAdditionalClasses(output, additionalClasses);
 
             output.Content.SetHtmlContent(
                 $"<div class='{modalClass}' id='{id}' tabindex='{tabIndex}' role='{role}' aria-labelledby='{labelledBy}' aria-hidden='{ariaHidden}'>" +
@@ -221,6 +221,14 @@ namespace Dewhitee.TagHelpers.Messages
             {
                 foreach (var @class in additionalClasses)
                     output.AddClass(@class, HtmlEncoder.Default);
+            }
+        }
+
+        private void ChooseContent(TagHelperOutput output)
+        {
+            if (output.TagMode is not TagMode.SelfClosing or TagMode.StartTagOnly)
+            {
+                Msg = output.GetChildContentAsync().Result.GetContent();
             }
         }
     }

@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Dewhitee.TagHelpers.Messages
 {
-    [HtmlTargetElement("help", TagStructure = TagStructure.WithoutEndTag)]
-    public class HelpTagHelper : MessageTagHelperBase
+    [HtmlTargetElement("help-msg", TagStructure = TagStructure.NormalOrSelfClosing)]
+    public class HelpMessageTagHelper : MessageTagHelperBase
     {
         public override void Process(TagHelperContext context, TagHelperOutput output)
             => OnProcess(context, output,

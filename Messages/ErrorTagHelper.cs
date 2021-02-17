@@ -12,9 +12,9 @@ namespace Dewhitee.TagHelpers.Messages
     {
         public override void Process(TagHelperContext context, TagHelperOutput output)
             => OnProcess(context, output,
-                textClass: "text-danger",
-                bgClass: "bg-danger",
-                noteClass: "note-danger",
-                calloutClass: "bs-callout-danger");
+                textClass: MessagesConfig.Error.TextClass,
+                bgClass: MessagesConfig.Error.BackgroundClass,
+                noteClass: MessagesConfig.Error.NoteClass,
+                calloutClass: MessagesConfig.Error.CalloutClass);
     }
 }
