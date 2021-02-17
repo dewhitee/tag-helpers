@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -49,7 +50,9 @@ namespace Dewhitee.TagHelpers.Tabs
                     break;
             }
 
-            var titles = Titles.Split(',');
+            // Remove spaces before and after ',' character and split into string array
+            var titles = Regex.Replace(Titles, @$"\s*\{','}\s*", $"{','}").Split(',');
+
             switch (titles.Length)
             {
                 case > 1:
