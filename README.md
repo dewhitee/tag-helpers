@@ -57,16 +57,16 @@ Add the following line inside your ***_ViewImports.cshtml*** file:
 
 ### Tabs
 ```cshtml
-<tabs mode="Horizontal">
-  <tab-buttons tabs-id="my-tabs" titles="Link 1, Link 2, Link 3"/>
-  <tab-contents tabs-id="my-tabs">
+<tabs mode="Horizontal" tabs-id="my-tabs">
+  <tab-buttons titles="Link 1, Link 2, Link 3"/>
+  <tab-contents>
     <tab-content title="Link 1" active="true">
       Link 1 content
     </tab-content>
-    <tab-content title="Link 2" active="true">
+    <tab-content title="Link 2">
       Link 2 content
     </tab-content>
-    <tab-content title="Link 3" active="true">
+    <tab-content title="Link 3">
       Link 3 content
     </tab-content>
   </tab-contents>
