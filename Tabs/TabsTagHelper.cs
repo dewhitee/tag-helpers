@@ -7,13 +7,14 @@ namespace Dewhitee.TagHelpers.Tabs
     [HtmlTargetElement("tabs", TagStructure = TagStructure.NormalOrSelfClosing)]
     public class TabsTagHelper : TagHelper
     {
-        public const string ModeName = "TabsMode";
         public TabsMode Mode { get; set; }
+        public string TabsId { get; set; }
         public override int Order => 5;
 
         public override void Init(TagHelperContext context)
         {
-            context.Items.Add(ModeName, Mode);
+            context.Items.Add(nameof(Mode), Mode);
+            context.Items.Add(nameof(TabsId), TabsId);
         }
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

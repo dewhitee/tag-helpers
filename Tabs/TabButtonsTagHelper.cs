@@ -16,21 +16,18 @@ namespace Dewhitee.TagHelpers.Tabs
     [HtmlTargetElement("tab-buttons", TagStructure = TagStructure.WithoutEndTag)]
     public class TabButtonsTagHelper : TagHelper
     {
-        public string TabsId { get; set; }
         public string Titles { get; set; }
-        
-        //public TabsMode Mode { get; set; }
-
         public override int Order => 10;
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             var builder = new StringBuilder();
-            Func<string, bool, string> tabFunc = null;
-            var mode = context.Items[TabsTagHelper.ModeName] as TabsMode? ?? TabsMode.Horizontal;
+            var mode = context.Items[nameof(TabsTagHelper.Mode)] as TabsMode? ?? TabsMode.Horizontal;
+            var tabsId = context.Items[nameof(TabsTagHelper.TabsId)] as string;
             
             string closingTag = "</div>";
 
+            Func<string, bool, string> tabFunc;
             switch (mode)
             {
                 case TabsMode.Horizontal:
@@ -44,7 +41,7 @@ namespace Dewhitee.TagHelpers.Tabs
                     break;
                 case TabsMode.Vertical:
                     output.AddClass("col-3", HtmlEncoder.Default);
-                    builder.Append($"<div class='nav flex-column nav-tabs text-center' id='tabs-{TabsId}' role='tablist' {ModeStr(mode)}>");
+                    builder.Append($"<div class='nav flex-column nav-tabs text-center' id='tabs-{tabsId}' role='tablist' {ModeStr(mode)}>");
                     tabFunc = SingleVerticalTab;
                     break;
                 default:

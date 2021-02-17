@@ -15,9 +15,9 @@ namespace Dewhitee.TagHelpers.Buttons
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            string style = "cursor:pointer;";
-            string iconClass = "far fa-question-circle";
-            string dataToggle = "modal";
+            const string style = "cursor:pointer;";
+            const string iconClass = "far fa-question-circle";
+            const string dataToggle = "modal";
             string dataTarget = "#" + ModalId;
 
             output.Content.SetHtmlContent(
