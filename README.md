@@ -9,10 +9,10 @@ Add the following line inside your ***_ViewImports.cshtml*** file:
 ## Examples
 
 ### Messages
+#### Self-closing messages
 ```cshtml
-
 <!-- Primitive messages -->
-<hint msg="My hint"/>
+<hint msg="My hint" />
 <error msg="My error message" />
 <warn msg="My warning" />
 <success msg="Success message"/>
@@ -21,9 +21,23 @@ Add the following line inside your ***_ViewImports.cshtml*** file:
 <hint msg="My hint" as="Callout" />
 <error msg="My error" as="Note" />
 
+<!-- 'when' attribute can be specified to set the condition under which tag message will be rendered -->
+<warn msg="ATTENTION: ..." when="Model.MyValue is null" />
+
 <!-- In case Modal mode is used - 'modal-id' attribute must be set to the id of a button that triggers this modal: -->
 <help-modal-btn modal-id="my-modal-button" />
 <hint msg="Some text as the content of a modal" as="Modal" modal-id="my-modal-button" />
+```
+#### Normal messages
+If self-closing message tag is not an option ****\*-msg**** tag helpers can be used instead:
+```cshtml
+<hint-msg>
+  My hint message
+</hint-msg>
+
+<error-msg>
+  My error message
+</error-msg>
 
 ```
 
